@@ -1,0 +1,55 @@
+/* iOS places the subtitle above the title */
+ion-card-header.ios {
+	display: flex;
+	flex-flow: column-reverse;
+}
+
+.current-weather-card {
+	margin-top: 20px;
+	border-radius: 10px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-top {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.card-top-right {
+	display: flex;
+	align-items: center;
+}
+
+.card-top-left h2 {
+	font-size: 24px;
+	margin: 0;
+}
+
+.card-top-left p {
+	font-size: 16px;
+	margin: 0;
+}
+
+.card-top-right p {
+	font-size: 24px;
+	margin: 0;
+}
+
+.card-bottom {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 10px;
+}
+
+.card-bottom-left p {
+	font-size: 16px;
+	margin: 0;
+}
+
+.card-bottom-right p {
+	font-size: 16px;
+	margin: 0;
+	text-align: right;
+}

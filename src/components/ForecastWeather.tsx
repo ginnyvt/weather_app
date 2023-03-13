@@ -1,5 +1,6 @@
 import { IonCard, IonCardContent, IonCol, IonGrid, IonRow } from "@ionic/react";
 import { FetchedForecastWeather } from "../utils/dataTypes";
+import { extractDt } from "../utils/extractDt";
 import styles from "./ForecastWeather.module.css";
 
 interface ForecastWeatherProps {
@@ -16,7 +17,7 @@ const ForecastWeather: React.FC<ForecastWeatherProps> = ({ forecastWeather }) =>
 							<IonCard>
 								<IonCardContent>
 									<div className={styles["card-top"]}>
-										<h2>15:00</h2>
+										<h2>{extractDt(data.dt).time}</h2>
 										<div>
 											<img src={`https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`} alt="Weather icon" />
 										</div>

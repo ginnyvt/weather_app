@@ -2,6 +2,7 @@ import { IonCard, IonCardContent } from "@ionic/react";
 import moment from "moment";
 
 import { WeatherData } from "../utils/dataTypes";
+import { extractDt } from "../utils/extractDt";
 import styles from "./CurrentWeather.module.css";
 
 interface CurrentWeatherProps {
@@ -10,12 +11,6 @@ interface CurrentWeatherProps {
 }
 
 const CurrentWeather: React.FC<CurrentWeatherProps> = ({ currentWeather, cityName }) => {
-	const extractDt = (dt: number) => {
-		const formattedDt = moment.unix(dt).format("MMM Do, HH:mm");
-		const [date, time] = formattedDt.split(", ");
-		return { date, time };
-	};
-
 	const dt = extractDt(currentWeather.dt);
 	return (
 		<div className="container">
@@ -30,7 +25,6 @@ const CurrentWeather: React.FC<CurrentWeatherProps> = ({ currentWeather, cityNam
 							<div>
 								<img src={`https://openweathermap.org/img/wn/${currentWeather.weather[0].icon}@2x.png`} alt="Weather icon" />
 							</div>
-
 							<h2>{currentWeather.main.temp}°C</h2>
 						</div>
 					</div>

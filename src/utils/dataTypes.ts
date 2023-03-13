@@ -10,7 +10,7 @@ export interface Coordinates {
 	lon: number;
 }
 
-export interface MainWeatherData {
+export interface MainWeatherInfo {
 	temp: number;
 	//feels_like: number;
 	//temp_min: number;
@@ -31,45 +31,40 @@ export interface RainInfo {
 }
 
 export interface City {
-	id: number;
+	id?: number;
 	name: string;
-	timezone: number;
 	coord: Coordinates;
-	//country: string;
+	timezone?: number;
+	country?: string;
 }
 
-export interface FetchedForecastWeather {
+export interface WeatherData {
 	dt: number;
-	main: MainWeatherData;
+	main: MainWeatherInfo;
 	weather: WeatherInfo[];
 	wind: WindInfo;
 	rain?: RainInfo;
-	dt_txt: string;
-}
-
-export interface DisplayedForecastWeather {
-	list: FetchedForecastWeather[];
-	city: City;
+	dt_text?: string;
 }
 
 export interface FetchedCurrentWeather {
 	coord: Coordinates;
 	weather: WeatherInfo[];
-	main: MainWeatherData;
+	main: MainWeatherInfo;
 	wind: WindInfo;
-	rain: RainInfo;
+	rain?: RainInfo;
 	dt: number;
 	timezone: number;
 	id: number;
 	name: string;
 }
 
-export interface DisplayedCurrentWeather {
-	temp: number;
-	wind: number;
-	humidity: number;
-	dt: number;
-	city: City;
-	precipitation?: number;
-	weather: WeatherInfo[];
+export interface FetchedWeatherData {
+	currentWeather: WeatherData;
+	forecastWeather: FetchedForecastWeather;
+	cityName: string;
+}
+
+export interface FetchedForecastWeather {
+	list: WeatherData[];
 }

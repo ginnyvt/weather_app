@@ -1,5 +1,4 @@
 import { IonCard, IonCardContent } from "@ionic/react";
-import moment from "moment";
 
 import { WeatherData } from "../utils/dataTypes";
 import { extractDt } from "../utils/extractDt";

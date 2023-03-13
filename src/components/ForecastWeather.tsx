@@ -1,43 +1,39 @@
-import {
-	IonCard,
-	IonCardContent,
-	IonCardHeader,
-	IonCardSubtitle,
-	IonCardTitle,
-	IonCol,
-	IonGrid,
-	IonRow,
-} from "@ionic/react";
-import "./ForecastWeather.css";
+import { IonCard, IonCardContent, IonCol, IonGrid, IonRow } from "@ionic/react";
+import { FetchedForecastWeather } from "../utils/dataTypes";
+import styles from "./ForecastWeather.module.css";
 
-interface ForecastWeatherProps {}
+interface ForecastWeatherProps {
+	forecastWeather: FetchedForecastWeather;
+}
 
-const ForecastWeather: React.FC<ForecastWeatherProps> = () => {
+const ForecastWeather: React.FC<ForecastWeatherProps> = ({ forecastWeather }) => {
 	return (
 		<div className="container">
-			<h2>Forecast weather card</h2>
-			{/* <IonGrid>
+			<IonGrid className="card-groups">
 				<IonRow>
-					<IonCol size="12" size-sm="2">
-						1
-					</IonCol>
-					<IonCol size="12" size-sm="2">
-						2
-					</IonCol>
-					<IonCol size="12" size-sm="2">
-						3
-					</IonCol>
-					<IonCol size="12" size-sm="2">
-						4
-					</IonCol>
-					<IonCol size="12" size-sm="2">
-						5
-					</IonCol>
-				</IonRow>
-			</IonGrid> */}
-			<IonGrid>
-				<IonRow>
-					<IonCol size="12" size-sm="2.4">
+					{forecastWeather.list.map((data) => (
+						<IonCol size="12" size-sm="2.4">
+							<IonCard>
+								<IonCardContent>
+									<div className={styles["card-top"]}>
+										<h2>15:00</h2>
+										<div>
+											<img src={`https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`} alt="Weather icon" />
+										</div>
+										<h2>{data.main.temp}°C</h2>
+									</div>
+									<hr />
+									<div className={styles["card-bottom"]}>
+										<p>{data.wind.speed} m/s</p>
+										<p>{data.main.humidity}%</p>
+										{data.rain ? <p>Precipitation: {data.rain["3h"]} mm</p> : <p>No precipitation in the next 3 hours</p>}
+									</div>
+								</IonCardContent>
+							</IonCard>
+						</IonCol>
+					))}
+
+					{/* <IonCol size="12" size-sm="2.4">
 						<IonCard>
 							<IonCardHeader>
 								<IonCardTitle>Helsinki</IonCardTitle>
@@ -80,18 +76,7 @@ const ForecastWeather: React.FC<ForecastWeatherProps> = () => {
 								Here's a small text description for the card content. Nothing more, nothing less.
 							</IonCardContent>
 						</IonCard>
-					</IonCol>
-					<IonCol size="12" size-sm="2.4">
-						<IonCard>
-							<IonCardHeader>
-								<IonCardTitle>Helsinki</IonCardTitle>
-								<IonCardSubtitle>Clear sky</IonCardSubtitle>
-							</IonCardHeader>
-							<IonCardContent>
-								Here's a small text description for the card content. Nothing more, nothing less.
-							</IonCardContent>
-						</IonCard>
-					</IonCol>
+					</IonCol> */}
 				</IonRow>
 			</IonGrid>
 		</div>

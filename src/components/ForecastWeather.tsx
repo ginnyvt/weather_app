@@ -16,33 +16,30 @@ const ForecastWeather: React.FC<ForecastWeatherProps> = ({ forecastWeather }) =>
 		);
 	}
 	return (
-		<div className="container">
-			<IonGrid className="card-groups">
-				<IonRow>
-					{forecastWeather.list.map((data, index) => (
-						<IonCol size="12" size-sm="2.4" key={index}>
-							<IonCard>
-								<IonCardContent>
-									<div className={styles["card-top"]}>
-										<h2>{extractDateTime(data.dt).time}</h2>
-										<div>
-											<img src={`https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`} alt="Weather icon" />
-										</div>
-										<h2>{data.main.temp}°C</h2>
+		<IonGrid className="card-groups">
+			<IonRow className={styles["row"]}>
+				{forecastWeather.list.map((data, index) => (
+					<IonCol size="2.4" key={index} className={styles["column"]}>
+						<IonCard className={styles["card"]}>
+							<IonCardContent className={styles["card-content"]}>
+								<div className={styles["card-top"]}>
+									<h2>{extractDateTime(data.dt).time}</h2>
+									<div className={styles["icon"]}>
+										<img src={`https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`} alt="Weather icon" />
 									</div>
-									<hr />
-									<div className={styles["card-bottom"]}>
-										<p>{data.wind.speed} m/s</p>
-										<p>{data.main.humidity}%</p>
-										{data.rain ? <p>Precipitation: {data.rain["3h"]} mm</p> : <p>No precipitation in the next 3 hours</p>}
-									</div>
-								</IonCardContent>
-							</IonCard>
-						</IonCol>
-					))}
-				</IonRow>
-			</IonGrid>
-		</div>
+									<h2>{data.main.temp}°C</h2>
+								</div>
+								<div className={styles["card-bottom"]}>
+									<p>{data.wind.speed} m/s</p>
+									<p>{data.main.humidity}%</p>
+									{data.rain && <p>{data.rain["3h"]} mm</p>}
+								</div>
+							</IonCardContent>
+						</IonCard>
+					</IonCol>
+				))}
+			</IonRow>
+		</IonGrid>
 	);
 };
 

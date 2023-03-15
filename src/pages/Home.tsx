@@ -9,7 +9,7 @@ import { City, FetchedWeatherData } from "../types/dataTypes";
 import ForecastWeather from "../components/ForecastWeather";
 import CurrentWeather from "../components/CurrentWeather";
 //styling
-import "./Home.css";
+import styles from "./Home.module.css";
 import { fetchCityCurrentWeather } from "../utils/fetchCityCurrentWeather";
 import { fetchCityForecastWeather } from "../utils/fetchCityForecastWeather";
 
@@ -56,11 +56,11 @@ const Home: React.FC = () => {
 		<IonPage>
 			<IonHeader>
 				<IonToolbar>
-					<IonTitle>Säätutka</IonTitle>
+					<IonTitle className={styles["page-header"]}>Säätutka</IonTitle>
 				</IonToolbar>
 			</IonHeader>
 			<IonContent fullscreen>
-				<>
+				<div className={styles.wrapper}>
 					<IonSelect value={selectedCity} onIonChange={handleCityChange} interface="popover" className="weather-select">
 						<IonSelectOption value="all" className="select-option">
 							All Cities
@@ -78,7 +78,7 @@ const Home: React.FC = () => {
 							<ForecastWeather forecastWeather={data.forecastWeather} />
 						</div>
 					))}
-				</>
+				</div>
 			</IonContent>
 		</IonPage>
 	);

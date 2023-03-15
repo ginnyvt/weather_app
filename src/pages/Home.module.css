@@ -1,0 +1,23 @@
+/* .wrapper {
+	width: 95%;
+	max-width: 1170px;
+	margin-left: auto;
+	margin-right: auto;
+} */
+
+.page-header {
+	text-align: center;
+	font-size: 23pt;
+	color: #262626;
+}
+
+.wrapper {
+	width: 85vw;
+	margin: 0 auto;
+	max-width: 996px;
+}
+@media screen and (min-width: 100px) {
+	.wrapper {
+		width: 95vw;
+	}
+}

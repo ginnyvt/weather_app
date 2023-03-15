@@ -12,10 +12,6 @@ export interface Coordinates {
 
 export interface MainWeatherInfo {
 	temp: number;
-	//feels_like: number;
-	//temp_min: number;
-	//temp_max: number;
-	//pressure: number;
 	humidity: number;
 }
 
@@ -47,24 +43,12 @@ export interface WeatherData {
 	dt_text?: string;
 }
 
-export interface FetchedCurrentWeather {
-	coord: Coordinates;
-	weather: WeatherInfo[];
-	main: MainWeatherInfo;
-	wind: WindInfo;
-	rain?: RainInfo;
-	dt: number;
-	timezone: number;
-	id: number;
-	name: string;
+export interface ForecastWeatherData {
+	list: WeatherData[];
 }
 
 export interface FetchedWeatherData {
-	currentWeather: WeatherData;
-	forecastWeather: FetchedForecastWeather;
+	currentWeather: WeatherData | false;
+	forecastWeather: ForecastWeatherData | false;
 	cityName: string;
-}
-
-export interface FetchedForecastWeather {
-	list: WeatherData[];
 }

@@ -1,71 +1,38 @@
 // library import
 import { IonContent, IonHeader, IonPage, IonSelect, IonSelectOption, IonTitle, IonToolbar } from "@ionic/react";
 import { useEffect, useState } from "react";
-import axios from "axios";
 // internal import
-import { cities } from "../utils/cityData";
-import { FetchedCurrentWeather, FetchedForecastWeather, FetchedWeatherData, WeatherData } from "../utils/dataTypes";
+import { cities } from "../assets/cityData";
+import { City, FetchedWeatherData } from "../types/dataTypes";
+
 // components
 import ForecastWeather from "../components/ForecastWeather";
 import CurrentWeather from "../components/CurrentWeather";
 //styling
 import "./Home.css";
+import { fetchCityCurrentWeather } from "../utils/fetchCityCurrentWeather";
+import { fetchCityForecastWeather } from "../utils/fetchCityForecastWeather";
 
 const Home: React.FC = () => {
+	const [isLoading, setIsLoading] = useState(false);
 	const [selectedCity, setSelectedCity] = useState("all");
-	const [weatherData, setWeatherData] = useState<FetchedWeatherData[] | null>(null);
-
-	const apiKey = process.env.REACT_APP_OPEN_WEATHER_API_KEY;
-	const baseUrl = process.env.REACT_APP_OPEN_WEATHER_URL;
+	const [weatherData, setWeatherData] = useState<FetchedWeatherData[]>([]);
 
 	const fetchData = async () => {
-		const promises = cities.map(async (city) => {
-			const currentWeatherPromise = axios({
-				url: `${baseUrl}/weather`,
-				params: {
-					appid: apiKey,
-					lat: city.coord.lat,
-					lon: city.coord.lon,
-					units: "metric",
-				},
-			});
-
-			const forecastWeatherPromise = axios({
-				url: `${baseUrl}/forecast`,
-				params: {
-					appid: apiKey,
-					lat: city.coord.lat,
-					lon: city.coord.lon,
-					units: "metric",
-					cnt: 5,
-				},
-			});
-
-			const [currentWeatherResponse, forecastWeatherResponse] = await Promise.all([
-				currentWeatherPromise,
-				forecastWeatherPromise,
-			]);
-
-			const currentWeatherData: FetchedCurrentWeather = currentWeatherResponse.data;
-			const currentWeather: WeatherData = {
-				dt: currentWeatherData.dt,
-				main: currentWeatherData.main,
-				weather: currentWeatherData.weather,
-				wind: currentWeatherData.wind,
-				rain: currentWeatherData.rain,
-			};
-			const forecastWeatherData: FetchedForecastWeather = forecastWeatherResponse.data;
+		setIsLoading(true);
+		const promises = cities.map(async (city: City) => {
+			const currentWeatherPromise = fetchCityCurrentWeather(city);
+			const forecastWeatherPromise = fetchCityForecastWeather(city);
+			const [currentWeather, forecastWeather] = await Promise.all([currentWeatherPromise, forecastWeatherPromise]);
 
 			return {
 				currentWeather,
-				forecastWeather: forecastWeatherData,
+				forecastWeather,
 				cityName: city.name,
 			};
-			// in map
 		});
-
-		// in function
 		const results = await Promise.all(promises);
+		setIsLoading(false);
 		setWeatherData(results);
 	};
 
@@ -73,18 +40,17 @@ const Home: React.FC = () => {
 		fetchData();
 	}, []);
 
-	console.log(weatherData);
-
 	const handleCityChange = (event: any) => {
 		setSelectedCity(event.target.value);
 	};
 
-	const filterWeatherData = () => {
-		if (selectedCity === "all") {
-			return weatherData;
-		}
-		return weatherData!.filter((data) => data.cityName === selectedCity);
-	};
+	let filteredWeatherData: FetchedWeatherData[] = [];
+	if (selectedCity === "all") filteredWeatherData = weatherData;
+	else filteredWeatherData = weatherData.filter((data) => data.cityName === selectedCity);
+
+	if (isLoading) {
+		return <p>Loading...</p>;
+	}
 
 	return (
 		<IonPage>
@@ -106,7 +72,7 @@ const Home: React.FC = () => {
 						))}
 					</IonSelect>
 
-					{filterWeatherData()?.map((data) => (
+					{filteredWeatherData.map((data) => (
 						<div key={data.cityName}>
 							<CurrentWeather cityName={data.cityName} currentWeather={data.currentWeather} />
 							<ForecastWeather forecastWeather={data.forecastWeather} />

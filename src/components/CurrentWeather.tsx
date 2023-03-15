@@ -1,16 +1,24 @@
 import { IonCard, IonCardContent } from "@ionic/react";
 
-import { WeatherData } from "../utils/dataTypes";
-import { extractDt } from "../utils/extractDt";
+import { WeatherData } from "../types/dataTypes";
+import { extractDateTime } from "../utils/extractDateTime";
 import styles from "./CurrentWeather.module.css";
 
 interface CurrentWeatherProps {
-	currentWeather: WeatherData;
+	currentWeather: WeatherData | false;
 	cityName: string;
 }
 
 const CurrentWeather: React.FC<CurrentWeatherProps> = ({ currentWeather, cityName }) => {
-	const dt = extractDt(currentWeather.dt);
+	if (currentWeather === false) {
+		return (
+			<div className="container">
+				<p>No data</p>
+			</div>
+		);
+	}
+
+	const dt = extractDateTime(currentWeather.dt);
 	return (
 		<div className="container">
 			<IonCard className={styles["current-weather-card"]}>
@@ -22,7 +30,7 @@ const CurrentWeather: React.FC<CurrentWeatherProps> = ({ currentWeather, cityNam
 						</div>
 						<div className={styles["card-top-right"]}>
 							<div>
-								<img src={`https://openweathermap.org/img/wn/${currentWeather.weather[0].icon}@2x.png`} alt="Weather icon" />
+								<img src={`https://openweathermap.org/img/wn/${currentWeather!.weather[0].icon}@2x.png`} alt="Weather icon" />
 							</div>
 							<h2>{currentWeather.main.temp}°C</h2>
 						</div>

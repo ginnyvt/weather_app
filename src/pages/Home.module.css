@@ -1,0 +1,54 @@
+.page-content {
+	background-color: #f8f9fa;
+}
+
+.page-header {
+	text-align: center;
+	font-size: 23pt;
+	color: #262626;
+}
+
+.wrapper {
+	width: 85vw;
+	margin: 0 auto;
+	max-width: 996px;
+}
+
+ion-select {
+	margin: 0 auto;
+	margin-top: 20px;
+	border: 1px solid #e6e6e6;
+	background-color: #fff;
+	border-radius: 5px;
+}
+
+ion-select::part(placeholder),
+ion-select::part(text) {
+	flex: 1 1 auto;
+}
+
+ion-select::part(text) {
+	color: #262626;
+	font-size: 13pt;
+}
+
+ion-select::part(icon) {
+	color: #70757a;
+	opacity: 1;
+}
+
+@media screen and (min-width: 100px) {
+	.wrapper {
+		width: 95vw;
+	}
+
+	ion-select {
+		width: 96%;
+	}
+}
+
+@media screen and (min-width: 996px) {
+	ion-select {
+		width: 98%;
+	}
+}

@@ -1,17 +1,26 @@
 // library import
-import { IonContent, IonHeader, IonPage, IonSelect, IonSelectOption, IonTitle, IonToolbar } from "@ionic/react";
+import {
+	IonContent,
+	IonFooter,
+	IonHeader,
+	IonLoading,
+	IonPage,
+	IonSelect,
+	IonSelectOption,
+	IonTitle,
+	IonToolbar,
+} from "@ionic/react";
 import { useEffect, useState } from "react";
 // internal import
 import { cities } from "../assets/cityData";
 import { City, FetchedWeatherData } from "../types/dataTypes";
-
+import { fetchCityCurrentWeather } from "../utils/fetchCityCurrentWeather";
+import { fetchCityForecastWeather } from "../utils/fetchCityForecastWeather";
 // components
 import ForecastWeather from "../components/ForecastWeather";
 import CurrentWeather from "../components/CurrentWeather";
 //styling
 import styles from "./Home.module.css";
-import { fetchCityCurrentWeather } from "../utils/fetchCityCurrentWeather";
-import { fetchCityForecastWeather } from "../utils/fetchCityForecastWeather";
 
 const Home: React.FC = () => {
 	const [isLoading, setIsLoading] = useState(false);
@@ -48,38 +57,56 @@ const Home: React.FC = () => {
 	if (selectedCity === "all") filteredWeatherData = weatherData;
 	else filteredWeatherData = weatherData.filter((data) => data.cityName === selectedCity);
 
-	if (isLoading) {
-		return <p>Loading...</p>;
-	}
-
 	return (
 		<IonPage>
 			<IonHeader>
 				<IonToolbar>
-					<IonTitle className={styles["page-header"]}>Säätutka</IonTitle>
+					<IonTitle className={styles["page-header"]} color="primary">
+						Säätutka
+					</IonTitle>
 				</IonToolbar>
 			</IonHeader>
-			<IonContent fullscreen>
+			<IonContent color="light" fullscreen>
 				<div className={styles.wrapper}>
-					<IonSelect value={selectedCity} onIonChange={handleCityChange} interface="popover" className="weather-select">
-						<IonSelectOption value="all" className="select-option">
-							All Cities
-						</IonSelectOption>
-						{cities.map((city) => (
-							<IonSelectOption key={city.name} value={city.name} className="select-option">
-								{city.name}
-							</IonSelectOption>
-						))}
-					</IonSelect>
+					<IonLoading isOpen={isLoading} onDidDismiss={() => setIsLoading(false)} message={"Loading..."} />
 
-					{filteredWeatherData.map((data) => (
-						<div key={data.cityName}>
-							<CurrentWeather cityName={data.cityName} currentWeather={data.currentWeather} />
-							<ForecastWeather forecastWeather={data.forecastWeather} />
+					{!isLoading && (
+						<div>
+							<div className={styles["select-container"]}>
+								<IonSelect value={selectedCity} onIonChange={handleCityChange} interface="popover" className="weather-select">
+									<IonSelectOption value="all" className="select-option">
+										All Cities
+									</IonSelectOption>
+									{cities.map((city) => (
+										<IonSelectOption key={city.name} value={city.name} className="select-option">
+											{city.name}
+										</IonSelectOption>
+									))}
+								</IonSelect>
+							</div>
+
+							<div>
+								{filteredWeatherData.map((data) => (
+									<div key={data.cityName}>
+										<CurrentWeather cityName={data.cityName} currentWeather={data.currentWeather} />
+										<ForecastWeather forecastWeather={data.forecastWeather} />
+									</div>
+								))}
+							</div>
 						</div>
-					))}
+					)}
 				</div>
 			</IonContent>
+			<IonFooter>
+				<IonToolbar>
+					<IonTitle style={{ textAlign: "center", fontSize: "12pt", fontWeight: "light" }}>
+						Copyright &copy;{" "}
+						<a href="https://github.com/ginnyvt/weather_app" target="blank">
+							ginnyvt
+						</a>
+					</IonTitle>
+				</IonToolbar>
+			</IonFooter>
 		</IonPage>
 	);
 };

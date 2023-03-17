@@ -27,11 +27,6 @@ ion-select::part(text) {
 	flex: 1 1 auto;
 }
 
-/* ion-select::part(placeholder)::first-letter {
-	font-size: 24px;
-	font-weight: 500;
-} */
-
 ion-select::part(text) {
 	color: #262626;
 	font-size: 13pt;

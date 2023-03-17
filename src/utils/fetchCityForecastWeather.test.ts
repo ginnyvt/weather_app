@@ -1,8 +1,6 @@
 import { cities } from "../assets/cityData";
 import { fetchCityForecastWeather } from "./fetchCityForecastWeather";
 
-//global.fetch = jest.fn(async () => Promise.resolve({ json: async () => Promise.resolve({ id: 0 }) })) as jest.Mock;
-
 function mockFetch() {
 	return jest.spyOn(window, "fetch").mockResolvedValue(
 		new Response(

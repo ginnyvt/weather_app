@@ -8,36 +8,41 @@ interface ForecastWeatherProps {
 }
 
 const ForecastWeather: React.FC<ForecastWeatherProps> = ({ forecastWeather }) => {
-	if (forecastWeather === false) {
-		return (
-			<div className="container">
-				<p>No data</p>
-			</div>
-		);
-	}
+	const iconUrl = process.env.REACT_APP_OPEN_WEATHER_ICON_URL;
+
 	return (
 		<IonGrid className="card-groups">
 			<IonRow className={styles["row"]}>
-				{forecastWeather.list.map((data, index) => (
-					<IonCol size="2.4" key={index} className={styles["column"]}>
+				{forecastWeather === false && (
+					<IonCol size="12" className={styles["column"]}>
 						<IonCard className={styles["card"]}>
-							<IonCardContent className={styles["card-content"]}>
-								<div className={styles["card-top"]}>
-									<h2>{extractDateTime(data.dt).time}</h2>
-									<div className={styles["icon"]}>
-										<img src={`https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`} alt="Weather icon" />
-									</div>
-									<h2>{data.main.temp}°C</h2>
-								</div>
-								<div className={styles["card-bottom"]}>
-									<p>{data.wind.speed} m/s</p>
-									<p>{data.main.humidity}%</p>
-									{data.rain && <p>{data.rain["3h"]} mm</p>}
-								</div>
+							<IonCardContent>
+								<p>No data</p>
 							</IonCardContent>
 						</IonCard>
 					</IonCol>
-				))}
+				)}
+				{forecastWeather !== false &&
+					forecastWeather.list.map((data, index) => (
+						<IonCol size="2.4" key={index} className={styles["column"]}>
+							<IonCard className={styles["card"]}>
+								<IonCardContent className={styles["card-content"]}>
+									<div className={styles["card-top"]}>
+										<h3>{extractDateTime(data.dt).time}</h3>
+										<div className={styles["icon"]}>
+											<img src={`${iconUrl}/${data.weather[0].icon}@2x.png`} alt="Weather icon" />
+										</div>
+										<h2>{Math.round(data.main.temp)} °C</h2>
+									</div>
+									<div className={styles["card-bottom"]}>
+										<p>{data.wind.speed} m/s</p>
+										<p>{data.main.humidity}%</p>
+										<p>{data.rain ? data.rain["3h"] : 0} mm</p>
+									</div>
+								</IonCardContent>
+							</IonCard>
+						</IonCol>
+					))}
 			</IonRow>
 		</IonGrid>
 	);

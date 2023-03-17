@@ -30,7 +30,13 @@ Start the client server.
   npx ionic server -p 8000
 ```
 
-Your server will be running at [localhost:8000](http://localhost:8000)
+Your server will be running at http://localhost:8000
+
+To run test
+
+```bash
+  npm run test
+```
 
 ## Demo
 

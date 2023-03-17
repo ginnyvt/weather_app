@@ -4,12 +4,6 @@ ion-card-header.ios {
 	flex-flow: column-reverse;
 }
 
-/* .current-weather-card {
-	margin-top: 20px;
-	border-radius: 10px;
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-} */
-
 .card-content {
 	margin: 0;
 	padding: 0;
@@ -28,18 +22,22 @@ ion-card-header.ios {
 }
 
 .card-top-left h2 {
-	font-size: 24px;
+	font-size: 19pt;
 	margin: 0;
+	color: #262626;
 }
 
 .card-top-left p {
-	font-size: 16px;
+	font-size: 13pt;
+	text-transform: capitalize;
 	margin: 0;
+	margin-top: 2px;
 }
 
-.card-top-right p {
-	font-size: 24px;
+.card-top-right h2 {
+	font-size: 26pt;
 	margin: 0;
+	color: #262626;
 }
 
 .card-bottom {
@@ -48,16 +46,23 @@ ion-card-header.ios {
 	align-items: center;
 	margin-top: 10px;
 }
-
-.card-bottom-left p {
-	font-size: 16px;
+.card-bottom-left h3 {
+	font-size: 15pt;
 	margin: 0;
+	color: #262626;
+}
+.card-bottom-left p {
+	font-size: 13pt;
+	color: #70757a;
+	margin: 0;
+	margin-top: 2px;
 }
 
 .card-bottom-right p {
-	font-size: 16px;
-	margin: 0;
 	text-align: right;
+	font-size: 13pt;
+	margin: 0;
+	color: #70757a;
 }
 
 @media screen and (min-width: 100px) {

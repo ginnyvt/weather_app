@@ -35,8 +35,8 @@ const ForecastWeather: React.FC<ForecastWeatherProps> = ({ forecastWeather }) =>
 										<h2>{Math.round(data.main.temp)} °C</h2>
 									</div>
 									<div className={styles["card-bottom"]}>
-										<p>{data.wind.speed} m/s</p>
-										<p>{data.main.humidity}%</p>
+										<p>{data.wind.speed.toFixed(1)} m/s</p>
+										<p>{data.main.humidity} %</p>
 										<p>{data.rain ? data.rain["3h"] : 0} mm</p>
 									</div>
 								</IonCardContent>

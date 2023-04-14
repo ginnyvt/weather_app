@@ -27,7 +27,7 @@ Install dependencies
 Start the client server.
 
 ```bash
-  npx ionic server -p 8000
+  npx ionic serve -p 8000
 ```
 
 Your server will be running at http://localhost:8000
